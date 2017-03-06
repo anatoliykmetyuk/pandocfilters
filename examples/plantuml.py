@@ -34,10 +34,10 @@ def plantuml(key, value, format, _):
                 with open(src, "w") as f:
                     f.write(txt)
 
-                call(["java", "-jar", "plantuml.jar", "-t"+filetype, src])
+                call(["plantuml", "-t"+filetype, src])
                 sys.stderr.write('Created image ' + dest + '\n')
 
-            return Para([Image([ident, [], keyvals], caption, [dest, typef])])
+            return Para([Image([ident, [], keyvals], caption, ['/'+dest, typef])])
 
 if __name__ == "__main__":
     toJSONFilter(plantuml)
