@@ -11,7 +11,7 @@ import os
 import sys
 from subprocess import call
 
-from pandocfilters import toJSONFilter, Para, Image, get_filename4code, get_caption, get_extension
+from pandocfilters import toJSONFilter, Para, Image, Link, get_filename4code, get_caption, get_extension
 
 
 def plantuml(key, value, format, _):
@@ -37,7 +37,10 @@ def plantuml(key, value, format, _):
                 call(["plantuml", "-t"+filetype, src])
                 sys.stderr.write('Created image ' + dest + '\n')
 
-            return Para([Image([ident, [], keyvals], caption, ['/'+dest, typef])])
+            absDest = '/'+dest
+            img = Image([ident, [], keyvals], caption, [absDest, typef])
+            lnk = Link (['', [], []], [img], [absDest, typef])
+            return Para([lnk])
 
 if __name__ == "__main__":
     toJSONFilter(plantuml)
